@@ -19,3 +19,14 @@ FROM CITY
 --6 모든 도시의 수와 유니크한 도시의 수의 차이 구하기
 SELECT COUNT(CITY) - COUNT(DISTINCT CITY)
 FROM STATION
+/* 7 : AS로 새로운 칼럼 만들기 !!
+1. salary * month = earnings
+2. 몇 명이 그만큼 벌었는지 계산하기
+3. earnings 중 가장 큰 값 가져온다
+*/
+SELECT salary*months AS earnings, COUNT(*)
+FROM Employee
+GROUP BY earnings
+ORDER BY earnings DESC
+LIMIT 1
+;
