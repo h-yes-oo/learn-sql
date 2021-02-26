@@ -101,3 +101,19 @@ SELECT Today.id as "Id"
 FROM Weather as Today 
     INNER JOIN Weather as Yesterday ON DATE_SUB(Today.recordDate,INTERVAL 1 DAY) = Yesterday.recordDate
 WHERE Today.Temperature > Yesterday.Temperature
+
+/*16 SYMMETRIC PAIRS
+*/
+SELECT X,Y
+FROM functions
+WHERE X=Y
+GROUP BY X, Y
+HAVING COUNT(*) >= 2
+
+UNION
+
+SELECT A.X, A.Y
+FROM functions AS A
+    INNER JOIN functions AS B ON A.X = B.Y  AND A.Y = B.X
+WHERE A.X < A.Y
+ORDER BY X --UNION을 한 경우 ORDER BY는 뒤에만 붙일 수 있음 !!

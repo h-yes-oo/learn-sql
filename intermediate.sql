@@ -64,3 +64,23 @@ WHERE orderID IS NULL
 --날짜 더하고 빼기
 SELECT DATE_SUB(NOW(), INTERVAL 1 SECOND)
 SELECT DATE_ADD(NOW(), INTERVAL 2 DAY)
+--테이블 위아래로 이어 붙이기
+SELECT *
+FROM Products
+WHERE price <= 5
+
+UNION 
+
+SELECT *
+FROM Products
+WHERE price >= 100
+--FULL OUTER JOIN : LEFT JOIN 과 RIGHT JOIN 을 UNION으로 묶어준다
+SELECT *
+FROM Customers
+	LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+
+UNION
+
+SELECT *
+FROM Customers
+	RIGHT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
