@@ -58,3 +58,46 @@ SELECT id,
     SUM(CASE WHEN month = "Dec" THEN revenue ELSE Null END) AS "Dec_Revenue"
 FROM Department
 GROUP BY id
+/*10
+CITY, COUNTRY 의 두 테이블에서 아프리카 대륙의 모든 도시 이름을 출력하기
+두 테이블에 동일한 이름의 column이 있는 경우 . 으로 어느 테이블의 컬럼인지 명시해주기
+*/
+SELECT CITY.NAME
+FROM CITY
+    INNER JOIN COUNTRY ON CITY.COUNTRYCODE = COUNTRY.CODE
+WHERE CONTINENT = 'Africa'
+/*11
+Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+*/
+SELECT SUM(CITY.POPULATION)
+FROM CITY
+    INNER JOIN COUNTRY ON CITY.CountryCode = COUNTRY.Code
+WHERE CONTINENT = 'Asia'
+/*12
+Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+*/
+SELECT COUNTRY.Continent, FLOOR(AVG(CITY.Population))
+FROM CITY INNER JOIN COUNTRY ON CITY.CountryCode = COUNTRY.Code
+GROUP BY COUNTRY.Continent
+/*13
+주문 내역이 없는 고객의 이름만 출력
+*/
+SELECT Customers.Name as 'Customers'
+FROM Customers LEFT JOIN Orders ON Customers.Id = Orders.CustomerId
+WHERE Orders.Id Is NULL
+/*14
+자기 자신을 가져다 붙이는 경우
+*/
+SELECT Employee.Name AS 'Employee'
+FROM Employee
+    INNER JOIN Employee AS Manager ON Employee.ManagerId = Manager.Id
+WHERE Employee.Salary > Manager.Salary
+/*15
+자기 자신을 가져다 붙이는 경우 & 날짜 연산
+*/
+SELECT Today.id as "Id"
+FROM Weather as Today 
+    INNER JOIN Weather as Yesterday ON DATE_SUB(Today.recordDate,INTERVAL 1 DAY) = Yesterday.recordDate
+WHERE Today.Temperature > Yesterday.Temperature

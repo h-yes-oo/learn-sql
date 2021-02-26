@@ -46,3 +46,21 @@ SELECT AVG(
        AVG(CASE WHEN categoryid = 2 THEN price ELSE NULL END) AS categoryid2_price,
        AVG(CASE WHEN categoryid = 3 THEN price ELSE NULL END) AS categoryid3_price
 FROM products
+--INNER JOIN ON
+SELECT * 
+FROM Orders
+	INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+    INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+
+--LEFT JOIN ON : 한번도 주문한 적이 없는 고객들도 출력
+SELECT * 
+FROM Customers
+	LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+-- 한번도 주문한 적 없는 고객들만 출력한다면 ??
+SELECT * 
+FROM Customers
+	LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE orderID IS NULL
+--날짜 더하고 빼기
+SELECT DATE_SUB(NOW(), INTERVAL 1 SECOND)
+SELECT DATE_ADD(NOW(), INTERVAL 2 DAY)
