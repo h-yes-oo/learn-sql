@@ -21,3 +21,28 @@ SELECT SupplierID
 FROM Products
 GROUP BY SupplierID, Categoryid
 HAVING avg_price > 20
+--case when else end as
+SELECT CASE
+			WHEN categoryid = 1 AND SupplierID = 1 THEN '음료'
+            WHEN categoryid = 2 THEN '조미료'
+            ELSE '기타'
+      END AS 'categoryName', *
+FROM Products
+--새로운 카테고리별 평균 가격 GROUP BY -> 카테고리별 평균 가격을 하나의 column에서 row 별로 보여줄 때
+SELECT CASE 
+			WHEN categoryid = 1 THEN '음료'
+            WHEN categoryid = 2 THEN '조미료'
+            ELSE '기타'
+      END AS new_category
+      , AVG(Price)
+FROM Products
+GROUP BY new_category
+--CASE를 활용한 테이블 피봇 -> 카테고리별 평균 가격을 각각의 column으로 보여줄 때
+SELECT AVG(
+		CASE 
+			WHEN categoryid = 1 THEN price 
+            ELSE NULL
+       END) AS categoryid1_price,
+       AVG(CASE WHEN categoryid = 2 THEN price ELSE NULL END) AS categoryid2_price,
+       AVG(CASE WHEN categoryid = 3 THEN price ELSE NULL END) AS categoryid3_price
+FROM products
