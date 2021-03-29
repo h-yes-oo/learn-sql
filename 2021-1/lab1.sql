@@ -7,6 +7,22 @@ LEFT JOIN course AS C ON SE.course_id = C.course_id
 ORDER BY S.ID ASC, C.title ASC;
 
 --5
+UPDATE student S
+SET S.tot_cred = (
+        SELECT SUM(C.credits) AS tot_cred
+        FROM takes AS T, section AS SEC, course AS C
+        WHERE 
+            S.ID = T.ID AND
+            T.course_id = SEC.course_id AND 
+            T.sec_id = SEC.sec_id AND 
+            T.semester = SEC.semester AND 
+            T.year = SEC.year AND 
+            T.grade IS NOT NULL AND
+            T.grade != 'F' AND
+            SEC.course_id = C.course_id
+);
+
+
 
 --6
 SELECT S.ID, C.title, C.credits
